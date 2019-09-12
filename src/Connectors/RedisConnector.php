@@ -3,7 +3,6 @@
 namespace Alone\LaravelQueueReplaceable\Connectors;
 
 use Alone\LaravelQueueReplaceable\RedisQueue;
-use Illuminate\Support\Arr;
 use Illuminate\Queue\Connectors\RedisConnector as BaseRedisConnector;
 
 class RedisConnector extends BaseRedisConnector
@@ -19,8 +18,9 @@ class RedisConnector extends BaseRedisConnector
     {
         return new RedisQueue(
             $this->redis, $config['queue'],
-            Arr::get($config, 'connection', $this->connection),
-            Arr::get($config, 'retry_after', 60)
+            $config['connection'] ?? $this->connection,
+            $config['retry_after'] ?? 60,
+            $config['block_for'] ?? null
         );
     }
 
