@@ -33,6 +33,7 @@ return [
         'replaceable_database' => [
             'driver'      => 'replaceable_database',
             'connection'  => 'mysql', // database connection
+            'table'       => 'jobs',
             'queue'       => 'default',
             'retry_after' => 90,
         ],
