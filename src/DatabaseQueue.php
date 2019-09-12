@@ -7,6 +7,8 @@ use Illuminate\Queue\DatabaseQueue as BaseDatabaseQueue;
 class DatabaseQueue extends BaseDatabaseQueue
 {
 
+    use QueueReplaceable;
+
     /**
      * Push an array of jobs onto the queue.
      *

@@ -49,6 +49,24 @@ return [
 ```php
 <?php
 
+namespace App\Jobs;
+
+class ProcessPodcast implements ShouldQueue
+{
+
+    public function getReplaceableId()
+    {
+        return 'replaceable-id';
+    }
+
+}
+```
+
+```php
+<?php
+
+use App\Jobs\ProcessPodcast;
+
 ProcessPodcast::dispatch($podcast)
     ->onConnection('replaceable_database')
     ->delay(now()->addMinutes(10));
