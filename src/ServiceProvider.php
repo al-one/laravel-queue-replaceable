@@ -2,26 +2,20 @@
 
 namespace Alone\LaravelQueueReplaceable;
 
-use Illuminate\Support\Facades\Queue;
-use Illuminate\Support\ServiceProvider as BaseServiceProvider;
+use Illuminate\Support;
 
-class ServiceProvider extends BaseServiceProvider
+class ServiceProvider extends Support\ServiceProvider
 {
 
-    /**
-     * Indicates if loading of the provider is deferred.
-     *
-     * @var bool
-     */
-    protected $defer = true;
-
-    public function register()
+    public function boot()
     {
-        Queue::extend('replaceable_database',function()
+        /** @var \Illuminate\Queue\QueueManager $queue */
+        $queue = $this->app['queue'];
+        $queue->addConnector('replaceable_database',function()
         {
             return new Connectors\DatabaseConnector($this->app['db']);
         });
-        Queue::extend('replaceable_redis',function()
+        $queue->addConnector('replaceable_redis',function()
         {
             return new Connectors\RedisConnector($this->app['redis']);
         });

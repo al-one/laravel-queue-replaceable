@@ -5,15 +5,12 @@ namespace Alone\LaravelQueueReplaceable;
 trait QueueReplaceable
 {
 
-    /**
-     * Create a payload string from the given job and data.
-     *
-     * @param  string  $job
-     * @param  mixed   $data
-     * @param  string  $queue
-     * @return array
-     */
-    protected function createPayloadArray($job, $data = '', $queue = null)
+    protected function createPayload($job,$data = '',$queue = null)
+    {
+        return parent::createPayload($this->getReplaceableJob($job),$data,$queue);
+    }
+
+    protected function createPayloadArray($job,$data = '',$queue = null)
     {
         return $this->createPayloadArrayReplaceable($job,$data,$queue);
     }
@@ -40,6 +37,20 @@ trait QueueReplaceable
             data_set($payload,'id',$replaceableId);
         }
         return $payload;
+    }
+
+    public function getReplaceableJob($job)
+    {
+        $replaceableJob = $job;
+        if(is_object($job))
+        {
+            $replaceableJob = clone $job;
+            if(method_exists($replaceableJob,'delay'))
+            {
+                $replaceableJob->delay(null);
+            }
+        }
+        return $replaceableJob;
     }
 
 }
