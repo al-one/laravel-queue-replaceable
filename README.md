@@ -30,7 +30,7 @@ return [
     'connections' => [
         'replaceable_database' => [
             'driver'      => 'replaceable_database',
-            'connection'  => 'default', // database connection
+            'connection'  => 'mysql', // database connection
             'queue'       => 'default',
             'retry_after' => 90,
         ],
