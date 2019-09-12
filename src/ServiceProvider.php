@@ -8,6 +8,13 @@ use Illuminate\Support\ServiceProvider as BaseServiceProvider;
 class ServiceProvider extends BaseServiceProvider
 {
 
+    /**
+     * Indicates if loading of the provider is deferred.
+     *
+     * @var bool
+     */
+    protected $defer = true;
+
     public function register()
     {
         Queue::extend('replaceable_database',function()
