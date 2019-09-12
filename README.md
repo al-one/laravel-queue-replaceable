@@ -13,17 +13,6 @@ $ composer require "al-one/laravel-queue-replaceable" -vvv
 ## Usage
 
 ```php
-# config/app.php
-<?php
-
-return [
-    'providers' => [
-        Alone\LaravelQueueReplaceable\ServiceProvider::class,
-    ],
-];
-```
-
-```php
 # config/queue.php
 <?php
 
