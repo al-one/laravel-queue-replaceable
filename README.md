@@ -1,5 +1,7 @@
 # Laravel Queue Driver For Delayed jobs Can be replaced
 
+> 暂时仅支持`Database`和`Redis`驱动
+
 
 ## Installing
 
