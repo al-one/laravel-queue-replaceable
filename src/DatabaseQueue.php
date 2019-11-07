@@ -19,12 +19,13 @@ class DatabaseQueue extends BaseDatabaseQueue
      */
     public function bulk($jobs, $data = '', $queue = null)
     {
-        $payloads = collect((array)$jobs)->map(function($job) use($data)
+        $queueName = $this->getQueue($queue);
+        $payloads = collect((array)$jobs)->map(function($job) use($queueName,$data)
         {
-            return $this->createPayload($job,$data);
+            return $this->createPayload($job,$queueName,$data);
         })->all();
         $this->database->table($this->table)
-            ->where('queue',$this->getQueue($queue))
+            ->where('queue',$queueName)
             ->whereIn('payload',$payloads)
             ->delete();
         return parent::bulk($jobs,$data,$queue);

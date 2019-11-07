@@ -5,14 +5,14 @@ namespace Alone\LaravelQueueReplaceable;
 trait QueueReplaceable
 {
 
-    protected function createPayload($job,$data = '',$queue = null)
+    protected function createPayload($job,$queue,$data = '')
     {
-        return parent::createPayload($this->getReplaceableJob($job),$data,$queue);
+        return parent::createPayload($this->getReplaceableJob($job),$queue,$data);
     }
 
-    protected function createPayloadArray($job,$data = '',$queue = null)
+    protected function createPayloadArray($job,$queue,$data = '')
     {
-        return $this->createPayloadArrayReplaceable($job,$data,$queue);
+        return $this->createPayloadArrayReplaceable($job,$queue,$data);
     }
 
     public function getJobReplaceableId($job,$data = '',$queue = null)
@@ -29,9 +29,9 @@ trait QueueReplaceable
         return $replaceableId;
     }
 
-    public function createPayloadArrayReplaceable($job,$data = '',$queue = null)
+    public function createPayloadArrayReplaceable($job,$queue,$data = '')
     {
-        $payload = parent::createPayloadArray($job,$data,$queue);
+        $payload = parent::createPayloadArray($job,$queue,$data);
         if($replaceableId = $this->getJobReplaceableId($job,$data,$queue))
         {
             data_set($payload,'id',$replaceableId);
