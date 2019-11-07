@@ -19,6 +19,10 @@ class ServiceProvider extends Support\ServiceProvider
         {
             return new Connectors\RedisConnector($this->app['redis']);
         });
+        $queue->addConnector('replaceable_file',function()
+        {
+            return new Connectors\FileConnector;
+        });
     }
 
 }

@@ -1,6 +1,6 @@
 # Laravel Queue Driver For Delayed jobs Can be replaced
 
-> 暂时仅支持`Database`和`Redis`驱动
+> 暂时仅支持`database`、`redis`以及[`file`](https://github.com/al-one/laravel-queue-file)驱动
 
 
 ## Installing
@@ -31,6 +31,11 @@ return [
             'connection'  => 'default', // redis connection
             'queue'       => 'default',
             'retry_after' => 90,
+        ],
+        'replaceable_file' => [
+            'driver' => 'replaceable_file', // composer require al-one/laravel-queue-file
+            //'path'   => 'app/queue', // use storage_path() if not start with "/"
+            //'queue'  => 'default',
         ],
     ],
 ];
