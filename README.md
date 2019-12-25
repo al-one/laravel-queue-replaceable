@@ -5,6 +5,13 @@
 
 ## Installing
 
+```
+# composer.json
+
+"minimum-stability": "dev",
+"prefer-stable": true,
+```
+
 ```sh
 $ composer require "al-one/laravel-queue-replaceable" -vvv
 ```
