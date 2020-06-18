@@ -19,7 +19,7 @@ class ServiceProvider extends Support\ServiceProvider
         });
     }
 
-    protected function registerDatabaseConnectors(QueueManager $manager)
+    protected function registerDatabaseConnector(QueueManager $manager)
     {
         $manager->addConnector('replaceable_database',function()
         {
@@ -27,7 +27,7 @@ class ServiceProvider extends Support\ServiceProvider
         });
     }
 
-    protected function registerRedisConnectors(QueueManager $manager)
+    protected function registerRedisConnector(QueueManager $manager)
     {
         $manager->addConnector('replaceable_redis',function()
         {
@@ -35,7 +35,7 @@ class ServiceProvider extends Support\ServiceProvider
         });
     }
 
-    protected function registerFileConnectors(QueueManager $manager)
+    protected function registerFileConnector(QueueManager $manager)
     {
         if(class_exists('\Alone\LaravelQueueFile\FileQueue'))
         {
