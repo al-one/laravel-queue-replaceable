@@ -3,26 +3,47 @@
 namespace Alone\LaravelQueueReplaceable;
 
 use Illuminate\Support;
+use Illuminate\Queue\QueueManager;
 
 class ServiceProvider extends Support\ServiceProvider
 {
 
     public function boot()
     {
-        /** @var \Illuminate\Queue\QueueManager $queue */
-        $queue = $this->app['queue'];
-        $queue->addConnector('replaceable_database',function()
+        $this->app->resolving(QueueManager::class,function($manager)
+        {
+            foreach(['Database','Redis','File'] as $connector)
+            {
+                $this->{"register{$connector}Connector"}($manager);
+            }
+        });
+    }
+
+    protected function registerDatabaseConnectors(QueueManager $manager)
+    {
+        $manager->addConnector('replaceable_database',function()
         {
             return new Connectors\DatabaseConnector($this->app['db']);
         });
-        $queue->addConnector('replaceable_redis',function()
+    }
+
+    protected function registerRedisConnectors(QueueManager $manager)
+    {
+        $manager->addConnector('replaceable_redis',function()
         {
             return new Connectors\RedisConnector($this->app['redis']);
         });
-        $queue->addConnector('replaceable_file',function()
+    }
+
+    protected function registerFileConnectors(QueueManager $manager)
+    {
+        if(class_exists('\Alone\LaravelQueueFile\FileQueue'))
         {
-            return new Connectors\FileConnector;
-        });
+            $manager->addConnector('replaceable_file',function()
+            {
+                return new Connectors\FileConnector;
+            });
+        }
     }
 
 }
