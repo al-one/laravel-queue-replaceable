@@ -34,7 +34,7 @@ trait QueueReplaceable
         $payload = parent::createPayloadArray($job,$queue,$data);
         if($replaceableId = $this->getJobReplaceableId($job,$data,$queue))
         {
-            data_set($payload,'id',$replaceableId);
+            data_set($payload,'uuid',$replaceableId);
         }
         return $payload;
     }
